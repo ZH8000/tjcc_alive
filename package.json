@@ -1,0 +1,16 @@
+{
+  "name": "AliveServer",
+  "version": "0.0.1",
+  "description": "alive server",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://hsuhsiaohsuan@bitbucket.org/hsuhsiaohsuan/tjcc_alive.git"
+  },
+  "dependencies": {
+    "express": "^4.10.6",
+    "net-ping": "^1.1.11",
+    "node-ini": "^1.0.0",
+    "socket.io": "^1.2.1"
+  }
+}
