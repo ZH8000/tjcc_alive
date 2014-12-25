@@ -3,15 +3,27 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var child_process = require('child_process');
-var n = child_process.fork('./ping.js');
+var pingHost = child_process.fork('./ping.js');
+var errMachine = child_process.fork('./errorMachine_monitor.js');
 
 console.log("alive server start.");
 
-n.on('message', function(msg) {
+pingHost.on('message', function(msg) {
   io.emit('aliveMsg', JSON.stringify(msg));
+  /*
   for (var x = 0; x < msg.length; x++) {
+    console.log("aliveMsg " + x + ":");
     console.log(msg[x]);
   }
+  */
+});
+
+errMachine.on('message', function(msg) {
+  io.emit('errMachineMsg', JSON.stringify(msg));
+  /*
+  console.log("errorMachineMsg: ");
+  console.log(msg);
+  */
 });
 
 app.use(express.static(__dirname + '/javascript'));
@@ -25,7 +37,7 @@ app.get('/', function(req, res) {
 
 io.on('connection', function(socket) {
   console.log('a user connected');
-  n.send('firstInit');
+  pingHost.send('firstInit');
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });

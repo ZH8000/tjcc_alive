@@ -16,9 +16,14 @@ var ipMappingData = {};
 fs.readFile(ipMappingFile, 'utf8', function(err, data) {
   if(err) {
     console.log('read ipMappingFile error: ' + err);
+    return;
   }
-  // console.log(data);
   ipMappingData = JSON.parse(data);
+  //console.log("ipMappingData: " + ipMappingData);
+  // var tmp = ipMappingData.filter(function(obj) {
+  //   return obj.IP === '192.168.20.1';
+  // });
+  // console.log("________________________________>>> " + tmp[0].NAME);
 });
 
 process.on('message', function(msg) {
@@ -28,15 +33,24 @@ process.on('message', function(msg) {
   }
 });
 
+function initIpArray(ipRange, upper, lower, ignoreIPs) {
+  for (var x = parseInt(lower); x <= parseInt(upper); x++) {
+    pingSet[ipRange+x] = 0;
+  }
+  for (var x = 0; x < ignoreIPs.length; x++) {
+    delete pingSet[ipRange + ignoreIPs[x]];
+  }
+}
+
 function queryHost(host) {
-  // console.log('queryHost');
+  // console.log('queryHost: ' + host);
   session.pingHost(host, function(err, ip) {
     if (err) {
       pingSet[ip] += 1;
     } else {
       pingSet[ip] = 0;
     }
-    console.log(ip + " : " + pingSet[ip]);
+    // console.log(ip + " : " + pingSet[ip]);
   });
 }
 
@@ -48,30 +62,21 @@ function checkAlive() {
 }
 
 function checkAliveResult(errorTimes) {
-  // console.log('checkAliveResult');
   var failedIp = [];
   for (var ip in pingSet) {
     if (pingSet[ip] >= errorTimes) {
+      // console.log(ip + " is over " + errorTimes);
+      var data = {};
       var tmp = ipMappingData.filter(function(obj) {
         return obj.IP === ip;
       });
-console.log(tmp);
-      var data = {};
       data["ID"] = tmp[0].ID;
+      data["IP"] = tmp[0].IP;
       failedIp.push(data);
       pingSet[ip] = parseInt(errorTimes);
     }
   }
   process.send(failedIp);
-}
-
-function initIpArray(ipRange, upper, lower, ignoreIPs) {
-  for (var x = parseInt(lower); x <= parseInt(upper); x++) {
-    pingSet[ipRange+x] = 0;
-  }
-  for (var x = 0; x < ignoreIPs.length; x++) {
-    delete pingSet[ipRange + ignoreIPs[x]];
-;  }
 }
 
 var iniRead = require('./iniRead.js')(function(iniData) {
