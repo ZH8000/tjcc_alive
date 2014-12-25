@@ -3,9 +3,16 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var child_process = require('child_process');
-// var n = child_process.fork('./ping.js');
+var n = child_process.fork('./ping.js');
 
 console.log("alive server start.");
+
+n.on('message', function(msg) {
+  io.emit('aliveMsg', JSON.stringify(msg));
+  for (var x = 0; x < msg.length; x++) {
+    console.log(msg[x]);
+  }
+});
 
 app.use(express.static(__dirname + '/javascript'));
 app.use(express.static(__dirname + '/json'));
