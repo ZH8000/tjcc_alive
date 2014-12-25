@@ -13,15 +13,18 @@
                 var content = '<tr>';
                 for (var x = 0; x < col; x++) {
                   content += '<td id="pi_' + (y * row + x)+ '">' + '</td>'
-                  //console.log(y * row + x);
+                  // console.log(y * row + x);
                 }
                 content += '</tr>';
                 $('#data table').append(content);
               }
 
-console.log("hi");
+              console.log("hi");
               $.getJSON('ipMapping.json', function(json) {
-                console.log(json);
+                // console.log(json);
+                $.each(json, function(index, json) {
+                    $('#pi_' + json.ID).append("HI");
+                });
               });
           });
         </script>

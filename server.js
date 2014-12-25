@@ -8,10 +8,12 @@ var child_process = require('child_process');
 console.log("alive server start.");
 
 app.use(express.static(__dirname + '/javascript'));
+app.use(express.static(__dirname + '/json'));
 
 app.get('/', function(req, res) {
   res.charset = 'utf-8';
-  res.sendfile('status.html');
+  //res.sendfile('status.html');
+  res.sendfile('tmp.html');
 });
 
 io.on('connection', function(socket) {
