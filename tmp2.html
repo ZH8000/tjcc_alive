@@ -35,7 +35,7 @@
             for (var y = 0; y < row; y++) {
               var content = '<tr>';
               for (var x = 0; x < col; x++) {
-                content += '<td class="cell" id="pi_' + (y * row + x)+ '">鎮海' + '</td>'
+                content += '<td class="cell" id="pi_' + (y * row + x)+ '">振海' + '</td>'
                 // console.log(y * row + x);
               }
               content += '</tr>';
@@ -60,7 +60,10 @@
           });
 
           socket.on('errMachineMsg', function(msg) {
-            
+            machineErrorData = jQuery.parseJSON(msg);
+            $.each(machineErrorData, function(index, json) {
+              $('#pi_'+json.ID).css('fill', '#ff0000');
+            });
           });
         </script>
     </head>
