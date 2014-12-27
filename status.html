@@ -33,7 +33,7 @@
           function getMachineData() {
             $.getJSON('ipMapping.json', function(json) {
               $.each(json, function(index, data) {
-                $('#pi_'+data.ID).html(
+                $('#data_'+data.ID).html(
                   data.NAME + '<br/>' + 
                   data.LOCATION + '<br/><br/>' + 
                   '<div class="cell_alive" style="width:50%; display:inline;" id="net_' + data.ID + '">網路</div>' +
@@ -50,7 +50,7 @@
               var content = '<tr>';
               for (var x = 0; x < col; x++) {
                 if((y * row + x) < numOfMachine) {
-                  content += '<td class="table" id="pi_' + (y * row + x) + '"></td>';
+                  content += '<td class="table" id="data_' + (y * row + x) + '"></td>';
                 }
               }
               content += '</tr>';

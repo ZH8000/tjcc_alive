@@ -24,13 +24,17 @@ fsmonitor.watch(folder, null, function(change) {
     for (var x in array) {
       // console.log("file content: " + array[x]);
       var data = {};
+	  //var tmp = null;
       var tmp = ipMappingData.filter(function(obj) {
         return obj.NAME === array[x];
       });
-      data["ID"] = tmp[0].ID
-      // data["NAME"] = tmp[0];
-      // data["DATE"] = Date();
-      failedMachine.push(data);
+	  console.log("tmp:" + tmp);
+	  if (tmp != "") {
+        data["ID"] = tmp[0].ID
+        // data["NAME"] = tmp[0];
+        // data["DATE"] = Date();
+        failedMachine.push(data);
+	  }
     }
     process.send(failedMachine);
     // console.log(failedMachine);
