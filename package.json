@@ -1,6 +1,6 @@
 {
   "name": "AliveServer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "alive server",
   "private": true,
   "repository": {
@@ -15,5 +15,15 @@
     "node-ini": "^1.0.0",
     "node-windows": "^0.1.7",
     "socket.io": "^1.2.1"
+  },
+  "npk_target": {
+    "app.js": {
+      "sources": [
+        "server.js",
+        "ping.js",
+        "errorMachine_monitor.js",
+        "iniRead.js"
+      ]
+    }
   }
 }
