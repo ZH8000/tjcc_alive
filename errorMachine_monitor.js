@@ -16,10 +16,8 @@ var fsmonitor = require('fsmonitor');
 
 console.log("start to monitor folder: /tcjcc/errorMachine");
 
-fsmonitor.watch(folder, null, function(change) {
-  if (change.modifiedFiles.indexOf("errorMachine.txt") > -1) {
-    console.log("errorMachine.txt changed!");
-    var failedMachine = [];
+function checkErrorMachine() {
+  var failedMachine = [];
     var array = fs.readFileSync(folder + file).toString().split("\r\n");
     for (var x in array) {
       // console.log("file content: " + array[x]);
@@ -37,6 +35,20 @@ fsmonitor.watch(folder, null, function(change) {
 	  }
     }
     process.send(failedMachine);
+}
+
+
+fsmonitor.watch(folder, null, function(change) {
+  if (change.modifiedFiles.indexOf("errorMachine.txt") > -1) {
+    console.log("errorMachine.txt changed!");
+    checkErrorMachine();
     // console.log(failedMachine);
+  }
+});
+
+process.on('message', function(msg) {
+  if (msg == 'firstInit') {
+    console.log('firstInit errorMachine');
+    checkErrorMachine();
   }
 });
