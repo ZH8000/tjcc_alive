@@ -72,7 +72,7 @@ function checkAliveResult(errorTimes) {
       });
       data["ID"] = tmp[0].ID;
       // data["IP"] = tmp[0].IP;
-      data["DATE"] = Date();
+      // data["DATE"] = Date();
       failedIp.push(data);
       pingSet[ip] = parseInt(errorTimes);
     }

@@ -34,8 +34,7 @@ app.get('/', function(req, res) {
   res.charset = 'utf-8';
   //res.contentType('text/html');
   //res.header('Content-Type', 'text/html; charset=utf-8')
-  //res.sendfile('status.html');
-  res.sendfile('tmp2.html');
+  res.sendfile('status.html');
 });
 
 io.on('connection', function(socket) {
