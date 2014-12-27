@@ -28,7 +28,7 @@ fsmonitor.watch(folder, null, function(change) {
       var tmp = ipMappingData.filter(function(obj) {
         return obj.NAME === array[x];
       });
-	  console.log("tmp:" + tmp);
+	  //console.log("tmp:" + tmp);
 	  if (tmp != "") {
         data["ID"] = tmp[0].ID
         // data["NAME"] = tmp[0];
