@@ -30,9 +30,9 @@ app.use(express.static(__dirname + '/javascript'));
 app.use(express.static(__dirname + '/json'));
 
 app.get('/', function(req, res) {
-  res.type('html');
+  //res.type('html');
   res.charset = 'utf-8';
-  res.contentType('text/html');
+  //res.contentType('text/html');
   //res.header('Content-Type', 'text/html; charset=utf-8')
   //res.sendfile('status.html');
   res.sendfile('tmp2.html');

@@ -71,11 +71,13 @@ function checkAliveResult(errorTimes) {
         return obj.IP === ip;
       });
       data["ID"] = tmp[0].ID;
-      data["IP"] = tmp[0].IP;
+      // data["IP"] = tmp[0].IP;
+      data["DATE"] = Date();
       failedIp.push(data);
       pingSet[ip] = parseInt(errorTimes);
     }
   }
+  //console.log(failedIp);
   process.send(failedIp);
 }
 
