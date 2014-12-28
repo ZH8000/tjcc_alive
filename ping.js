@@ -28,7 +28,7 @@ fs.readFile(ipMappingFile, 'utf8', function(err, data) {
 
 process.on('message', function(msg) {
   if (msg == 'firstInit') {
-    // checkAliveResult(10);
+    checkAliveResult(2);
     console.log('firstInit ping');
   }
 });

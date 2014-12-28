@@ -13,7 +13,6 @@
     "fsmonitor": "^0.2.4",
     "net-ping": "^1.1.11",
     "node-ini": "^1.0.0",
-    "node-windows": "^0.1.7",
     "socket.io": "^1.2.1"
   }
 }
