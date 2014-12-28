@@ -28,7 +28,7 @@ fs.readFile(ipMappingFile, 'utf8', function(err, data) {
 
 process.on('message', function(msg) {
   if (msg == 'firstInit') {
-    checkAliveResult(2);
+    checkAliveResult(3);
     console.log('firstInit ping');
   }
 });
@@ -60,9 +60,8 @@ function checkAlive() {
     setTimeout(queryHost(ip), 5000);
   }
 }
-
+var failedIp = [];
 function checkAliveResult(errorTimes) {
-  var failedIp = [];
   for (var ip in pingSet) {
     if (pingSet[ip] >= errorTimes) {
       // console.log(ip + " is over " + errorTimes);
