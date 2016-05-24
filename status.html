@@ -50,12 +50,20 @@
               var content = '<tr>';
               for (var x = 0; x < col; x++) {
                 if((y * row + x) < numOfMachine) {
-                  content += '<td class="table" id="data_' + (y * row + x) + '"></td>';
+                  // change place of No.5 and No.20 machine
+                  var tmp_id = y * row + x;
+                  if (tmp_id === 4) {
+                    tmp_id = 19;
+                  } else if(tmp_id === 19) {
+                    tmp_id = 4;
+                  }
+                  content += '<td class="table" id="data_' + tmp_id + '"></td>';
                 }
               }
               content += '</tr>';
               $('#data table').append(content);
             }
+
 
             getMachineData();
           });

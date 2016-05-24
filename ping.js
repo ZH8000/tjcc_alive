@@ -1,10 +1,10 @@
 var ping = require('net-ping');
 var options = {
   networkProtocol:ping.NetworkProtocol.IPv4,
-  packetSize: 12,
-  retries: 0,
+  packetSize: 16,
+  retries: 5,
   sessionId: (process.pid % 65535),
-  timeout: 500,
+  timeout: 2000,
   ttl: 128
 };
 var session = ping.createSession(options);
@@ -43,14 +43,14 @@ function initIpArray(ipRange, upper, lower, ignoreIPs) {
 }
 
 function queryHost(host) {
-  // console.log('queryHost: ' + host);
+  console.log('queryHost: ' + host);
   session.pingHost(host, function(err, ip) {
     if (err) {
       pingSet[ip] += 1;
     } else {
       pingSet[ip] = 0;
     }
-    // console.log(ip + " : " + pingSet[ip]);
+    console.log(ip + " : " + pingSet[ip]);
   });
 }
 
@@ -64,7 +64,7 @@ var failedIp = [];
 function checkAliveResult(errorTimes) {
   for (var ip in pingSet) {
     if (pingSet[ip] >= errorTimes) {
-      // console.log(ip + " is over " + errorTimes);
+      console.log(ip + " is over " + errorTimes);
       var data = {};
       var tmp = ipMappingData.filter(function(obj) {
         return obj.IP === ip;
@@ -76,8 +76,9 @@ function checkAliveResult(errorTimes) {
       pingSet[ip] = parseInt(errorTimes);
     }
   }
-  //console.log(failedIp);
+  console.log(failedIp);
   process.send(failedIp);
+  failedIp = [];
 }
 
 var iniRead = require('./iniRead.js')(function(iniData) {
